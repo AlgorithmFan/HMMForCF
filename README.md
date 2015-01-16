@@ -1,10 +1,10 @@
-#-------------------------------------------------------------------------------
-# Name:       A Hidden Markov Model
-# Purpose:    A class for the model, including parameters.
-# Author:     Haidong Zhang
-# Created:    28/08/2014
-# E-mail:     haidong_zhang13@163.com
-#-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+Name:       A Hidden Markov Model
+Purpose:    A class for the model, including parameters.
+Author:     Haidong Zhang
+Created:    28/08/2014
+E-mail:     haidong_zhang13@163.com
+-------------------------------------------------------------------------------
 DataPreprocess.py (Firstly excute.)
 
 Pre-process the data, generate two .txt file.
@@ -17,11 +17,11 @@ Pre-process the data, generate two .txt file.
         artist_id: the artist id.
         timestamp: the time stamp.
 
-#-------------------------------------------------------------------------------
-# HMMForCF
+------------------------------------------------------------------------------
+HMMForCF
 A Hidden Markov Model for Collaborative Filtering
 
-#-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 HMM.py
 
 A class for modeling the hidden markov model.
@@ -32,23 +32,22 @@ TransProbs: he probability of transition matrix.
 Theta: The probability of emission matrix.
 a, b: Represent the parameters of negative binomial distribution.
 
-#-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 HMM_ForwardBackward1.py
 
 Forward-backward algorithm is used to train the model.
 
-#-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 CommonFunc.py
 
 Some common used functions.
 
-#-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 UserModel.py
 
 Model the users.
 
-
-#-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
 
 .
