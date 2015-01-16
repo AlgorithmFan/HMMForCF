@@ -75,17 +75,19 @@ def calLogEmssProb(data, mHMM):
 
 def calLogAlphaBeta(mHMM, logEmssProbs):
     '''
-    Calculating the alpha and beta.
+    Calculating the alpha and beta. #Formula 1.2 - Formula 1.4
     '''
     Tu = logEmssProbs.shape[0]
     logAlpha = np.zeros((Tu, mHMM.HiddenStatesNum), np.float)
     logBeta = np.zeros((Tu, mHMM.HiddenStatesNum), np.float)
     logNormalVector = np.zeros(Tu) #P(I(u, t) | I(u,1:t-1))
 
+    #Formula 1.2
     logAlpha[0, :] = mHMM.InitProbs + logEmssProbs[0, :]
     logNormalVector[0] = logsumexp(logAlpha[0, :])
     logAlpha[0, :] -= logNormalVector[0]
 
+    #Formula 1.3
     for t in range(1, Tu):
         for k in range(mHMM.HiddenStatesNum):
             logAlpha[t, k] = logsumexp(logAlpha[t-1, :] + mHMM.TransProbs[:, k]) + logEmssProbs[t, k]
@@ -94,6 +96,7 @@ def calLogAlphaBeta(mHMM, logEmssProbs):
 
     #beta
     logBeta[-1, :] = 0
+     #Formula 1.4
     for t in range(Tu-2, -1, -1):
         for k in range(mHMM.HiddenStatesNum):
             logBeta[t, k] = logsumexp(logBeta[t+1, :] + mHMM.TransProbs[k, :] + logEmssProbs[t+1, :])
@@ -115,10 +118,12 @@ def calLogGammaRho(train, mHMM):
     '''
     Calculating the gamma and rho.
     '''
+    #Formula 1.1
     logEmssProb = calLogEmssProb(train, mHMM)
+    #Formula 1.2 - 1.4
     logAlpha, logBeta, logNormalVector = calLogAlphaBeta(mHMM, logEmssProb)
-    logGamma = logAlpha + logBeta
-    logRho = calSubLogRho(mHMM, logEmssProb, logAlpha, logBeta, logNormalVector)
+    logGamma = logAlpha + logBeta    #Formula 1.5
+    logRho = calSubLogRho(mHMM, logEmssProb, logAlpha, logBeta, logNormalVector)     #Formula 1.6
     return logGamma, logRho
 
 def isZeros(matrix):
@@ -254,22 +259,28 @@ class CForwardBackward:
                 temp = np.dot(NutArray, gamma)
                 next_theta_denominator += temp
 
+            #Formula 1.7
             mHMM.InitProbs = (next_init_numerator + float(alphaInitDir)/mHMM.HiddenStatesNum - 1)\
                              /(next_init_denominator + alphaInitDir - mHMM.HiddenStatesNum)
             mHMM.InitProbs = log(mHMM.InitProbs)
 
+            #Formula 1.8
             mHMM.TransProbs = (next_trans_numerator + float(alphaTransDir)/mHMM.HiddenStatesNum - 1)\
                             /(next_trans_denominator[..., newaxis] + alphaTransDir - mHMM.HiddenStatesNum)
             mHMM.TransProbs = log(mHMM.TransProbs)
 
+            #Formula 1.9
             mHMM.Theta = (next_theta_numerator + float(alphaThetaDir)/mHMM.ObservationStatesNum - 1)\
                             /(next_theta_denominator[..., newaxis] + alphaThetaDir - mHMM.ObservationStatesNum)
             mHMM.Theta = log(mHMM.Theta)
 
+            #Formula 1.10 and #Formula 1.11
             mHMM.a, mHMM.b = self.calNegBion(mHMM, mUserModels, self.logGamma)
 
             #calculate the expected likelihood.
             #print 'Calculate the expected likelihood.'
+
+            #Formula 1.12
             new_likelihood = 0.0
             for user_id in mUserModels:
                 Tu = mUserModels[user_id].train.shape[0]
@@ -306,6 +317,7 @@ class CForwardBackward:
         Calculating the recommendation for the active_id.
         '''
         recommendation = np.zeros(mHMM.ObservationStatesNum, np.float)
+        #Formula 1.13 and Formula 1.14
         for k in range(mHMM.HiddenStatesNum):
             logRec = logsumexp(self.logGamma[active_id][-1, :] + mHMM.TransProbs[:, k]) - mHMM.a[k]*log(1+mHMM.b[k]*exp(mHMM.Theta[k,:]))
             recommendation += exp(logRec)
@@ -335,7 +347,6 @@ class CForwardBackward:
     def clearVar(self):
         self.gamma = {}
         self.rho = {}
-
 
 def main(mUserModels, mArtistsList, artists_thr, top_num, hidden_num, dateNum, dateFlag):
     '''
