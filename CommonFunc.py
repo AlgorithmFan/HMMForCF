@@ -3,6 +3,8 @@
 import numpy as np
 from numpy import newaxis
 from UserModel import CUserModel
+import codecs
+import cPickle
 
 def normalizeVec(vector):
     '''Normalize a vector'''
@@ -81,6 +83,18 @@ def loadLastData(artists_thr, flag):
 
     print 'The number of users is %d.' % len(mUserModels)
     return mUserModels, artistsList
+
+def loadPickle(filename):
+    print 'Read data from %s.' % filename
+    fp = open(filename)
+    data = cPickle.load(fp)
+    fp.close()
+    return data
+
+def dumpPickle(data, filename):
+    fp = open(filename, 'w')
+    cPickle.dump(data, fp)
+    fp.close()
 
 if __name__ == '__main__':
     test = np.random.randint(0, 10, (5,4))

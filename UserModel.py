@@ -58,7 +58,7 @@ class CUserModel:
             self.train = np.array(train)
             self.test = np.array(test)
             index = np.nonzero(self.train.sum(axis=0)>0)
-            #self.test[:, index] = np.zeros(self.test[:, index].shape)
+            self.test[:, index] = np.zeros(self.test[:, index].shape)
             return True
 
     def splitDataByMonth(self, _year, _month, _day, _dateNum = 12):
