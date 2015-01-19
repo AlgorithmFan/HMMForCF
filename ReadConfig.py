@@ -39,9 +39,9 @@ class CReadConfig:
         top_num = int(self.cf.get("HMM", "top_num"))
         items_thr = int(self.cf.get("HMM", "items_thr"))
         date_flag = self.cf.get("HMM", "date_flag")
-        init_weight = self.cf.get("HMM", "init_weight")
-        trans_weight =  self.cf.get("HMM", "trans_weight")
-        theta_weight = self.cf.get("HMM", "theta_weight")
+        init_weight = float(self.cf.get("HMM", "init_weight"))
+        trans_weight =  float(self.cf.get("HMM", "trans_weight"))
+        theta_weight = float(self.cf.get("HMM", "theta_weight"))
         date_thr, date_num, date_interval = basic[date_flag]
         description = self.cf.get("HMM", "description")
         parameters = {'top_num':top_num, 'items_thr':items_thr, 'date_flag':date_flag,
@@ -55,12 +55,12 @@ class CReadConfig:
         top_num = int(self.cf.get("HSMM", "top_num"))
         items_thr = int(self.cf.get("HSMM", "items_thr"))
         date_flag = self.cf.get("HSMM", "date_flag")
-        init_weight = self.cf.get("HSMM", "init_weight")
-        trans_weight =  self.cf.get("HSMM", "trans_weight")
-        theta_weight = self.cf.get("HSMM", "theta_weight")
-        duration_weight = self.cf.get("HSMM", "duration_weight")
+        init_weight = float(self.cf.get("HSMM", "init_weight"))
+        trans_weight =  float(self.cf.get("HSMM", "trans_weight"))
+        theta_weight = float(self.cf.get("HSMM", "theta_weight"))
+        duration_weight = float(self.cf.get("HSMM", "duration_weight"))
         date_thr, date_num, date_interval = basic[date_flag]
-        duration_max = self.cf.get("HSMM", "duration_max")
+        duration_max = int(self.cf.get("HSMM", "duration_max"))
         description = self.cf.get("HSMM", "description")
         parameters = {'top_num':top_num, 'items_thr':items_thr, 'date_flag':date_flag,
                       'init':init_weight, 'trans': trans_weight, 'theta':theta_weight,'duration':duration_weight,

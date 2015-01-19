@@ -2,7 +2,8 @@
 #coding:utf-8
 import numpy as np
 from numpy import newaxis
-from UserModel import CUserModel
+# from UserModel import CUserModel
+from UserModelMusicIm import CUserModel
 import codecs
 import cPickle
 

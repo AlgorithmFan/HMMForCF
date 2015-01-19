@@ -3,7 +3,7 @@
 import time
 
 class CRecords():
-    def __ini__(self, filename):
+    def __init__(self, filename):
         self.fp = open(filename, 'a')
         self.begin()
 
@@ -16,7 +16,7 @@ class CRecords():
         self.fp.flush()
 
     def writeDescription(self, description=None):
-        self.fp.writ('*'*100 + '\n')
+        self.fp.write('*'*100 + '\n')
         if description is not None:
             self.fp.write(description)
             self.fp.write('\n')
@@ -24,7 +24,9 @@ class CRecords():
 
     def writeParameters(self, parameters):
         for key in parameters:
-            self.fp.write('%s: %s' % (key, parameters[key]))
+            if key == 'description':
+                continue
+            self.fp.write('%s: %s\t' % (key, parameters[key]))
         self.fp.write('\n')
         self.fp.write('DateNum\tHit\tRecall\tPrecision\n')
         self.fp.flush()

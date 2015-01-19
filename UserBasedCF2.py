@@ -68,10 +68,13 @@ class CUserBasedCF:
 def main(mUserModels, mArtistsList, parameters):
     hitNum10, recNum10, preNum10 = 0, 0, 0
     hitNum5, recNum5, preNum5 = 0, 0, 0
-    mCRecords10 = CRecords('recommendation/UserBasedCF2%s_t%d_a%d.txt' % (parameters['date_flag'], 10, parameters['items_thr']))
-    mCRecords5 = CRecords('recommendation/UserBasedCF2%s_t%d_a%d.txt' % (parameters['date_flag'], 5, parameters['items_thr']))
+
+    mCRecords10 = CRecords(r'recommendation/UserBasedCF2%s_t%d_a%d.txt' % (parameters['date_flag'], 10, parameters['items_thr']))
+    mCRecords5 = CRecords(r'recommendation/UserBasedCF2%s_t%d_a%d.txt' % (parameters['date_flag'], 5, parameters['items_thr']))
     mCRecords10.writeDescription(parameters['description'])
     mCRecords5.writeDescription(parameters['description'])
+    mCRecords10.writeParameters(parameters)
+    mCRecords5.writeParameters(parameters)
 
     copy_UserModels = mUserModels.copy()
     mCUserBasedCF = CUserBasedCF()
@@ -125,7 +128,7 @@ def main(mUserModels, mArtistsList, parameters):
     print 'F1: ', f1
     mCRecords10.writeDescription('artists_thr: %d.\n' % parameters['items_thr'])
     mCRecords10.writeDescription('Recall: %d, %f.\n' % (recNum10, recall))
-    mCRecords10.writeDescription.write('Precision: %d, %f.\n' % (preNum10, precision))
+    mCRecords10.writeDescription('Precision: %d, %f.\n' % (preNum10, precision))
     mCRecords10.writeDescription('F1: %f\n' % f1)
     mCRecords10.close()
 
@@ -138,7 +141,7 @@ def main(mUserModels, mArtistsList, parameters):
     print 'F1: ', f1
     mCRecords5.writeDescription('artists_thr: %d.\n' % parameters['items_thr'])
     mCRecords5.writeDescription('Recall: %d, %f.\n' % (recNum5, recall))
-    mCRecords5.writeDescription.write('Precision: %d, %f.\n' % (preNum5, precision))
+    mCRecords5.writeDescription('Precision: %d, %f.\n' % (preNum5, precision))
     mCRecords5.writeDescription('F1: %f\n' % f1)
     mCRecords5.close()
 
