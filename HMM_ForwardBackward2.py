@@ -364,7 +364,7 @@ def main(mUserModels, mArtistsList, parameters):
             flag = mUserModels[user_id].splitDate(_year=year, _month=month, _day=day, _dateNum = date_num)
             if flag == False:  del mUserModels[user_id]
         if len(mUserModels) > 1:
-            recommendation, mHMM = mCForwardBackward.calRecommend(mUserModels, hidden_num, mArtistsList, top_num)
+            recommendation, mHMM = mCForwardBackward.calRecommend(mUserModels, parameters['hidden_num'], mArtistsList,  parameters['top_num'])
             mCForwardBackward.clearVar()
         else:
             recommendation = {}
@@ -422,12 +422,12 @@ if __name__ == '__main__':
 
     NearZero = 10**(-290)
     mCConfig = CReadConfig("config.ini")
-    parameters = mCConfig.getHSMM()
+    parameters = mCConfig.getHMM()
 
-    # mUserModels, mArtistsList = loadLastData(artists_thr, flag)
+    mUserModels, mArtistsList = loadLastData(parameters['items_thr'], parameters['date_flag'])
     #
-    mUserModels = loadPickle('Data/mUserModelsIm%d_%s.txt' % (parameters['items_thr'], parameters['date_flag']))
-    mArtistsList = loadPickle('Data/mArtistsListIm%d_%s.txt' % (parameters['items_thr'], parameters['date_flag']))
+    # mUserModels = loadPickle('Data/mUserModelsIm%d_%s.txt' % (parameters['items_thr'], parameters['date_flag']))
+    # mArtistsList = loadPickle('Data/mArtistsListIm%d_%s.txt' % (parameters['items_thr'], parameters['date_flag']))
 
 
     hiddenStates = [20, 30, 40, 50]

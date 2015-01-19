@@ -151,10 +151,10 @@ if __name__ == '__main__':
     mCConfig = CReadConfig("config.ini")
     parameters = mCConfig.getUBCF()
 
-    # mUserModels, mArtistsList = loadLastData(artists_thr, flag)
+    mUserModels, mArtistsList = loadLastData(parameters['items_thr'], parameters['date_flag'])
     #
-    mUserModels = loadPickle('Data/mUserModelsIm%d_%s.txt' % (parameters['items_thr'], parameters['date_flag']))
-    mArtistsList = loadPickle('Data/mArtistsListIm%d_%s.txt' % (parameters['items_thr'], parameters['date_flag']))
+    # mUserModels = loadPickle('Data/mUserModelsIm%d_%s.txt' % (parameters['items_thr'], parameters['date_flag']))
+    # mArtistsList = loadPickle('Data/mArtistsListIm%d_%s.txt' % (parameters['items_thr'], parameters['date_flag']))
     #
 
     main(mUserModels, mArtistsList, parameters)
